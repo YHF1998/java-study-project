@@ -17,8 +17,9 @@ public class TestJdbc {
         Class.forName("com.mysql.cj.jdbc.Driver");
         //2.连接数据库
         Connection connection = DriverManager.getConnection(url, username, password);
-        //3.向数据库发送sql的对象statement
+        //3.向数据库发送sql的对象statement, 预处理可以用prepareStatement
         Statement statement = connection.createStatement();
+
 
         //4.编写sql
         String sql = "select * from `javaweb`.`users` limit 10";
