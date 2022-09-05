@@ -4,6 +4,9 @@ import java.sql.*;
 
 public class TestJdbc {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+
+
         //配置信息
         //useUnicode=true&characterEncoding=utf-8 解决中文乱码
         String url = "jdbc:mysql://localhost:3400/javaweb?useUnicode=true&characterEncoding=utf-8";
