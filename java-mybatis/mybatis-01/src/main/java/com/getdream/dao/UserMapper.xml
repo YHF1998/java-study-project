@@ -2,10 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace对应dao的interface-->
 <mapper namespace="com.getdream.dao.UserDao">
-    <!--查询语句块-->
+    <!--查询语句块 id值独赢interface里面的方法 resultType指返回的对应类型，指向javaBean实体类-->
     <select id="getUserList" resultType="com.getdream.pojo.User">
         select *
-        from user
+        from user limit 10
+    </select>
+
+    <select id="getUserByID" resultType="com.getdream.pojo.User">
+        select * from user where id=#{id}
     </select>
 </mapper>
