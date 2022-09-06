@@ -4,13 +4,31 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace对应dao的interface-->
 <mapper namespace="com.getdream.dao.UserDao">
+
+    <!--新增-->
+    <insert id="addUser" parameterType="com.getdream.pojo.User">
+        insert into javaweb.user(id, name, pwd)
+        values (#{id}, #{name}, #{pwd})
+    </insert>
+
+    <!--更新-->
+    <update id="updateUser" parameterType="com.getdream.pojo.User">
+        update javaweb.user
+        set name=#{name},
+            pwd=#{pwd}
+        where id = #{id}
+    </update>
+
     <!--查询语句块 id值独赢interface里面的方法 resultType指返回的对应类型，指向javaBean实体类-->
     <select id="getUserList" resultType="com.getdream.pojo.User">
         select *
         from user limit 10
     </select>
 
-    <select id="getUserByID" resultType="com.getdream.pojo.User">
-        select * from user where id=#{id}
+    <!--查询单条-->
+    <select id="getUserByID" parameterType="int" resultType="com.getdream.pojo.User">
+        select *
+        from user
+        where id = #{id}
     </select>
 </mapper>
