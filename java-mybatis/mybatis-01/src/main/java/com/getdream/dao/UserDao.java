@@ -4,6 +4,7 @@ package com.getdream.dao;
 import com.getdream.pojo.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 
@@ -15,5 +16,11 @@ public interface UserDao {
 
     int addUser(User user);
 
+    int addUserWithMap(Map<String,Object> map);
+
     int updateUser(User user);
+
+    int deleteUserByID(int id);
+
+
 }

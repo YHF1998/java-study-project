@@ -11,6 +11,12 @@
         values (#{id}, #{name}, #{pwd})
     </insert>
 
+    <!--新增-map版-->
+    <insert id="addUserWithMap" parameterType="map">
+        insert into javaweb.user(name, pwd)
+        values (#{name}, #{pwd})
+    </insert>
+
     <!--更新-->
     <update id="updateUser" parameterType="com.getdream.pojo.User">
         update javaweb.user
@@ -18,6 +24,13 @@
             pwd=#{pwd}
         where id = #{id}
     </update>
+
+    <delete id="deleteUserByID" parameterType="int">
+        delete
+        from javaweb.user
+        where id =
+              #{id}
+    </delete>
 
     <!--查询语句块 id值独赢interface里面的方法 resultType指返回的对应类型，指向javaBean实体类-->
     <select id="getUserList" resultType="com.getdream.pojo.User">

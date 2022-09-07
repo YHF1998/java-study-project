@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 class UserDaoTest {
@@ -83,6 +85,48 @@ class UserDaoTest {
         sqlSession.commit();
 
         sqlSession.close();
+
+    }
+
+    @Test
+    void deleteUserByID() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        int i = mapper.deleteUserByID(5);
+
+        if (i > 0) {
+            System.out.println("删除成功");
+        }
+
+        sqlSession.commit();
+
+        sqlSession.close();
+
+    }
+
+    @Test
+    void addUserWithMap() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("name", "李雷");
+        map.put("pwd", "sdfsadfs");
+
+        int i = mapper.addUserWithMap(map);
+
+        if (i > 0) {
+            System.out.println("插入成功");
+        }
+
+        sqlSession.commit();
+
+        sqlSession.close();
+
 
     }
 }
