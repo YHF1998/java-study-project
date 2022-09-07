@@ -146,3 +146,236 @@ public interface UserDao {
 </mapper>
 ```
 
+
+
+
+
+## 5.CURD
+
+```
+com/getdream/dao/UserDao.java
+com/getdream/dao/UserMapper.xml
+com/getdream/dao/UserDaoTest.java
+```
+
+
+
+```java
+package com.getdream.dao;
+
+
+import com.getdream.pojo.User;
+
+import java.util.List;
+import java.util.Map;
+
+public interface UserDao {
+
+    //查询列表
+    List<User> getUserList();
+
+    //根据id查询信息
+    User getUserByID(int id);
+
+    int addUser(User user);
+
+    int addUserWithMap(Map<String,Object> map);
+
+    int updateUser(User user);
+
+    int deleteUserByID(int id);
+
+
+}
+
+```
+
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace对应dao的interface-->
+<mapper namespace="com.getdream.dao.UserDao">
+
+    <!--新增-->
+    <insert id="addUser" parameterType="com.getdream.pojo.User">
+        insert into javaweb.user(id, name, pwd)
+        values (#{id}, #{name}, #{pwd})
+    </insert>
+
+    <!--新增-map版-->
+    <insert id="addUserWithMap" parameterType="map">
+        insert into javaweb.user(name, pwd)
+        values (#{name}, #{pwd})
+    </insert>
+
+    <!--更新-->
+    <update id="updateUser" parameterType="com.getdream.pojo.User">
+        update javaweb.user
+        set name=#{name},
+            pwd=#{pwd}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserByID" parameterType="int">
+        delete
+        from javaweb.user
+        where id =
+              #{id}
+    </delete>
+
+    <!--查询语句块 id值独赢interface里面的方法 resultType指返回的对应类型，指向javaBean实体类-->
+    <select id="getUserList" resultType="com.getdream.pojo.User">
+        select *
+        from user limit 10
+    </select>
+
+    <!--查询单条-->
+    <select id="getUserByID" parameterType="int" resultType="com.getdream.pojo.User">
+        select *
+        from user
+        where id = #{id}
+    </select>
+</mapper>
+```
+
+
+
+```java
+package com.getdream.dao;
+
+import com.getdream.pojo.User;
+import com.getdream.utils.MybatisUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+class UserDaoTest {
+
+    @Test
+    public void test() {
+
+        //获取sqlSession对象
+        try (SqlSession sqlSession = MybatisUtils.getSqlSession()) {
+            //方式一：
+            UserDao userDao = sqlSession.getMapper(UserDao.class);
+            List<User> userList = userDao.getUserList();
+
+            //方式二：这种使用率不高，一般都是第一种
+            //List<User> userList = sqlSession.selectList("com.getdream.dao.UserDao.getUserList");
+
+            for (User user : userList) {
+                System.out.println(user);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.getStackTrace();
+        }
+
+
+    }
+
+    @Test
+    public void getUserByID() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        User info = mapper.getUserByID(2);
+
+        System.out.println(info);
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void addUser() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        int i = mapper.addUser(new User(5, "xixi", "241234"));
+
+        if (i > 0) {
+            System.out.println("插入成功");
+        }
+
+
+        //提交事务  增删改都需要提交事务
+        sqlSession.commit();
+
+        sqlSession.close();
+
+    }
+
+    @Test
+    void updateUser() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        int i = mapper.updateUser(new User(5, "chenchen", "chenchen"));
+
+        if (i > 0) {
+            System.out.println("更新成功");
+        }
+
+        //提交事务
+        sqlSession.commit();
+
+        sqlSession.close();
+
+    }
+
+    @Test
+    void deleteUserByID() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        int i = mapper.deleteUserByID(5);
+
+        if (i > 0) {
+            System.out.println("删除成功");
+        }
+
+        sqlSession.commit();
+
+        sqlSession.close();
+
+    }
+
+    @Test
+    void addUserWithMap() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("name", "李雷");
+        map.put("pwd", "sdfsadfs");
+
+        int i = mapper.addUserWithMap(map);
+
+        if (i > 0) {
+            System.out.println("插入成功");
+        }
+
+        sqlSession.commit();
+
+        sqlSession.close();
+
+
+    }
+}
+```
+
