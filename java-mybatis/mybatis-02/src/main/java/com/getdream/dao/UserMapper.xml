@@ -6,7 +6,8 @@
 <mapper namespace="com.getdream.dao.UserDao">
 
     <!--新增-->
-    <insert id="addUser" parameterType="com.getdream.pojo.User">
+    <!--<insert id="addUser" parameterType="com.getdream.pojo.User">-->
+    <insert id="addUser" parameterType="User">
         insert into javaweb.user(id, name, pwd)
         values (#{id}, #{name}, #{pwd})
     </insert>
@@ -18,7 +19,8 @@
     </insert>
 
     <!--更新-->
-    <update id="updateUser" parameterType="com.getdream.pojo.User">
+    <!--<update id="updateUser" parameterType="com.getdream.pojo.User">-->
+    <update id="updateUser" parameterType="User">
         update javaweb.user
         set name=#{name},
             pwd=#{pwd}
@@ -33,13 +35,15 @@
     </delete>
 
     <!--查询语句块 id值独赢interface里面的方法 resultType指返回的对应类型，指向javaBean实体类-->
-    <select id="getUserList" resultType="com.getdream.pojo.User">
+    <!--<select id="getUserList" resultType="com.getdream.pojo.User">-->
+    <select id="getUserList" resultType="User">
         select *
         from user limit 10
     </select>
 
     <!--查询单条-->
-    <select id="getUserByID" parameterType="int" resultType="com.getdream.pojo.User">
+    <!--<select id="getUserByID" parameterType="int" resultType="com.getdream.pojo.User">-->
+    <select id="getUserByID" parameterType="int" resultType="User">
         select *
         from user
         where id = #{id}
