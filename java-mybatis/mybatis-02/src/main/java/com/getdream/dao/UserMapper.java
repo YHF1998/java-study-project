@@ -6,7 +6,7 @@ import com.getdream.pojo.User;
 import java.util.List;
 import java.util.Map;
 
-public interface UserDao {
+public interface UserMapper {
 
     //查询列表
     List<User> getUserList();

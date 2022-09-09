@@ -62,7 +62,8 @@
 
     <!--每一个mapper.xml 都需要在mybatis核心配置文件中注册-->
     <mappers>
-        <mapper resource="com/getdream/dao/UserMapper.xml"/>
+        <!--<mapper resource="com/getdream/dao/UserMapper.xml"/>-->
+        <mapper class="com.getdream.dao.UserMapper"/>
     </mappers>
 </configuration>
 

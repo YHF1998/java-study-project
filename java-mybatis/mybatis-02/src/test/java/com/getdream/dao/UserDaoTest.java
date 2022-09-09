@@ -18,7 +18,7 @@ class UserDaoTest {
         //获取sqlSession对象
         try (SqlSession sqlSession = MybatisUtils.getSqlSession()) {
             //方式一：
-            UserDao userDao = sqlSession.getMapper(UserDao.class);
+            UserMapper userDao = sqlSession.getMapper(UserMapper.class);
             List<User> userList = userDao.getUserList();
 
             //方式二：这种使用率不高，一般都是第一种
@@ -39,7 +39,7 @@ class UserDaoTest {
     public void getUserByID() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
 
-        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         User info = mapper.getUserByID(2);
 
@@ -52,7 +52,7 @@ class UserDaoTest {
     public void addUser() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
 
-        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         int i = mapper.addUser(new User(5, "xixi", "241234"));
 
@@ -72,7 +72,7 @@ class UserDaoTest {
     void updateUser() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
 
-        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         int i = mapper.updateUser(new User(5, "chenchen", "chenchen"));
 
@@ -91,7 +91,7 @@ class UserDaoTest {
     void deleteUserByID() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
 
-        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         int i = mapper.deleteUserByID(5);
 
@@ -109,7 +109,7 @@ class UserDaoTest {
     void addUserWithMap() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
 
-        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         Map<String, Object> map = new HashMap<>();
 
