@@ -62,8 +62,16 @@
 
     <!--每一个mapper.xml 都需要在mybatis核心配置文件中注册-->
     <mappers>
+        <!--三选一-->
+
+        <!--resource方式-->
         <!--<mapper resource="com/getdream/dao/UserMapper.xml"/>-->
-        <mapper class="com.getdream.dao.UserMapper"/>
+
+        <!--class方式 dao的接口需要和xml同名同目录-->
+        <!--<mapper class="com.getdream.dao.UserMapper"/>-->
+
+        <!--package方式  dao的接口需要和xml同名同目录 其实就是相当于class的批量-->
+        <package name="com.getdream.dao"/>
     </mappers>
 </configuration>
 
