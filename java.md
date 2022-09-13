@@ -1,4 +1,4 @@
-# Mybatis配置
+# Mybatis
 
 
 
@@ -379,3 +379,55 @@ class UserDaoTest {
 }
 ```
 
+
+
+# Mybatis配置注意点
+
+## 1.映射器
+
+在MapperRegistry:注册绑定我们的Mapper文件
+
+```
+java-mybatis/mybatis-02/src/main/resources/mybatis-config.xml
+```
+
+方式一：
+
+```xml
+ <mappers>
+        <mapper resource="com/getdream/dao/UserMapper.xml"/>
+    </mappers>
+```
+
+
+
+方式二：使用class文件绑定注册 
+
+```xml
+ <mappers>
+        <mapper class="com.getdream.dao.UserDao"/>
+    </mappers>
+```
+
+注意点：
+
+接口需要和他的Mapper配置文件同名（UserMapper 与UserMapper.xml）
+
+接口需要和他的Mapper配置文件在同一个包下
+
+
+
+方式三：使用扫描包进行注入绑定
+
+```xml
+<mappers>
+        <!--package方式  dao的接口需要和xml同名同目录 其实就是相当于class的批量-->
+        <package name="com.getdream.dao"/>
+    </mappers>
+```
+
+注意点：
+
+接口需要和他的Mapper配置文件同名（UserMapper 与UserMapper.xml）
+
+接口需要和他的Mapper配置文件在同一个包下
