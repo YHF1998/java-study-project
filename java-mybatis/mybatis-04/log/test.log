@@ -1,0 +1,6 @@
+22:08:58.383 [main] INFO  com.getdream.dao.UserMapper - 这是info
+22:08:58.385 [main] WARN  com.getdream.dao.UserMapper - 这是warn
+22:08:58.385 [main] ERROR com.getdream.dao.UserMapper - 这是error
+22:09:16.803 [main] INFO  com.getdream.dao.UserMapper - 这是info
+22:09:16.805 [main] WARN  com.getdream.dao.UserMapper - 这是warn
+22:09:16.805 [main] ERROR com.getdream.dao.UserMapper - 这是error

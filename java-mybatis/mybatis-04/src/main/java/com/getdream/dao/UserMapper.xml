@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace对应dao的interface-->
+<mapper namespace="com.getdream.dao.UserMapper">
+
+
+    <!--结果集映射 因为pwd在实体类里面名称是password，可以使用这种方式进行映射-->
+    <resultMap id="UserMap" type="User">
+        <result column="pwd" property="password"/>
+    </resultMap>
+
+    <!--查询单条-->
+    <select id="getUserByID" parameterType="int" resultMap="UserMap">
+        select *
+        from user
+        where id = #{id}
+    </select>
+</mapper>
