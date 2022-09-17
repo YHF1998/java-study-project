@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+mapper为映射的根节点，用来管理DAO接口
+namespace指定DAO接口的完整类名，表示mapper配置文件管理哪个DAO接口(包.接口名)
+mybatis会依据这个接口动态创建一个实现类去实现这个接口，而这个实现类是一个Mapper对象
+-->
+<mapper namespace="com.getdream.dao.StudentMapper">
+    <!--
+    id = "接口中的方法名"
+    parameterType = "接口中传入方法的参数类型"
+    resultType = "返回实体类对象：包.类名" 处理结果集 自动封装
+    注意:sql语句后不要出现";"号
+    查询：select标签
+    增加：insert标签
+    修改：update标签
+    删除：delete标签
+    -->
+
+
+    <!--多对一之方式二 开始-->
+    <!--按照结果嵌套处理
+    需要留意 resultMap里面的result对应的字段映射 配错了返回的值可就跟着错了
+    -->
+    <select id="getInfoList2" resultMap="StudentTeacher2">
+        select s.id as sid, s.name as sname, t.id as tid, t.name as tname
+        from javaweb.student as s,
+             javaweb.teacher as t
+        where s.tid = t.id
+    </select>
+
+    <resultMap id="StudentTeacher2" type="Student">
+        <result property="id" column="sid"/>
+        <result property="name" column="sname"/>
+
+        <!--复杂的属性，需要单独处理-->
+        <!--对象 association-->
+        <!--集合：collection-->
+
+        <association property="teacher" javaType="Teacher">
+            <result property="name" column="tname"/>
+            <result property="id" column="tid"/>
+        </association>
+    </resultMap>
+    <!--多对一之方式二 结束-->
+
+
+    <!--多对一之方式一 开始-->
+    <!--先查询出学生数据，在根据tid查老师数据-->
+    <select id="getInfoList" resultMap="StudentTeacher">
+        select *
+        from javaweb.student
+        limit 10
+    </select>
+
+    <resultMap id="StudentTeacher" type="Student">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+
+        <!--复杂的属性，需要单独处理-->
+        <!--对象 association-->
+        <!--集合：collection-->
+
+        <association property="teacher" column="tid" javaType="Teacher" select="getTeacher"/>
+    </resultMap>
+
+    <!--查老师
+    因为这个select其实是用作上面getInfoList的子查询 其实#{id}这个占位符里面写id tid xxx 效果都是一样的，因为StudentTeacher-》association-》column里面配置的student表的对应列进行填充（这里是tid列）
+    -->
+    <select id="getTeacher" resultType="Teacher">
+        select *
+        from javaweb.teacher
+        where id = #{id}
+    </select>
+    <!--多对一之方式一 结束-->
+
+
+    <select id="getInfoByID" resultType="com.getdream.pojo.Student">
+        select *
+        from javaweb.student
+        where id = #{id}
+    </select>
+
+
+</mapper>
