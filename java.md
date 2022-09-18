@@ -431,3 +431,209 @@ java-mybatis/mybatis-02/src/main/resources/mybatis-config.xml
 接口需要和他的Mapper配置文件同名（UserMapper 与UserMapper.xml）
 
 接口需要和他的Mapper配置文件在同一个包下
+
+
+
+# 多对一与一对多
+
+## 多对一
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+mapper为映射的根节点，用来管理DAO接口
+namespace指定DAO接口的完整类名，表示mapper配置文件管理哪个DAO接口(包.接口名)
+mybatis会依据这个接口动态创建一个实现类去实现这个接口，而这个实现类是一个Mapper对象
+-->
+<mapper namespace="com.getdream.dao.StudentMapper">
+    <!--
+    id = "接口中的方法名"
+    parameterType = "接口中传入方法的参数类型"
+    resultType = "返回实体类对象：包.类名" 处理结果集 自动封装
+    注意:sql语句后不要出现";"号
+    查询：select标签
+    增加：insert标签
+    修改：update标签
+    删除：delete标签
+    -->
+
+
+    <!--多对一之方式二 开始-->
+    <!--按照结果嵌套处理
+    需要留意 resultMap里面的result对应的字段映射 配错了返回的值可就跟着错了
+    -->
+    <select id="getInfoList2" resultMap="StudentTeacher2">
+        select s.id as sid, s.name as sname, t.id as tid, t.name as tname
+        from javaweb.student as s,
+             javaweb.teacher as t
+        where s.tid = t.id
+    </select>
+
+    <resultMap id="StudentTeacher2" type="Student">
+        <result property="id" column="sid"/>
+        <result property="name" column="sname"/>
+
+        <!--复杂的属性，需要单独处理-->
+        <!--对象 association-->
+        <!--集合：collection-->
+
+        <association property="teacher" javaType="Teacher">
+            <result property="name" column="tname"/>
+            <result property="id" column="tid"/>
+        </association>
+    </resultMap>
+    <!--多对一之方式二 结束-->
+
+
+    <!--多对一之方式一 开始-->
+    <!--先查询出学生数据，在根据tid查老师数据-->
+    <select id="getInfoList" resultMap="StudentTeacher">
+        select *
+        from javaweb.student
+        limit 10
+    </select>
+
+    <resultMap id="StudentTeacher" type="Student">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+
+        <!--复杂的属性，需要单独处理-->
+        <!--对象 association-->
+        <!--集合：collection-->
+
+        <association property="teacher" column="tid" javaType="Teacher" select="getTeacher"/>
+    </resultMap>
+
+    <!--查老师
+    因为这个select其实是用作上面getInfoList的子查询 其实#{id}这个占位符里面写id tid xxx 效果都是一样的，因为StudentTeacher-》association-》column里面配置的student表的对应列进行填充（这里是tid列）
+    -->
+    <select id="getTeacher" resultType="Teacher">
+        select *
+        from javaweb.teacher
+        where id = #{id}
+    </select>
+    <!--多对一之方式一 结束-->
+
+
+    <select id="getInfoByID" resultType="com.getdream.pojo.Student">
+        select *
+        from javaweb.student
+        where id = #{id}
+    </select>
+
+
+</mapper>
+
+```
+
+
+
+## 一对多
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+mapper为映射的根节点，用来管理DAO接口
+namespace指定DAO接口的完整类名，表示mapper配置文件管理哪个DAO接口(包.接口名)
+mybatis会依据这个接口动态创建一个实现类去实现这个接口，而这个实现类是一个Mapper对象
+-->
+<mapper namespace="com.getdream.dao.TeacherMapper">
+    <!--
+    id = "接口中的方法名"
+    parameterType = "接口中传入方法的参数类型"
+    resultType = "返回实体类对象：包.类名" 处理结果集 自动封装
+    注意:sql语句后不要出现";"号
+    查询：select标签
+    增加：insert标签
+    修改：update标签
+    删除：delete标签
+    -->
+
+    <!--多对一用关联 association-->
+    <!--一对多用集合 collection-->
+
+
+    <!--一对多  方式一 开始-->
+    <resultMap id="TeacherMap" type="Teacher">
+        <result property="id" column="tid"/>
+        <result property="name" column="tname"/>
+
+        <!--
+        property 对应JavaBean里面的属性
+        javaType 指定属性的类型
+        集合中的泛型信息，我们使用ofType获取
+        -->
+        <collection property="students" column="tid" javaType="ArrayList" ofType="Student">
+            <result property="id" column="sid"/>
+            <result property="name" column="sname"/>
+            <result property="tid" column="stid"/>
+        </collection>
+    </resultMap>
+
+    <select id="getInfoList" resultMap="TeacherMap">
+        select s.id sid, t.id tid, t.name tname, s.name sname, s.tid stid
+        from javaweb.teacher t,
+             javaweb.student s
+        where t.id = s.tid;
+    </select>
+
+    <!--一对多  方式一 结束-->
+
+
+    <!--一对多  方式二 开始-->
+
+    <!--1.先查询老师-->
+    <resultMap id="TeacherMap2" type="Teacher">
+        <!--因为property一样 可以省略 不过这里省略 结果显示老师的id可能会变成0 要么在sql显示声明获取字段，要么写id的result咯-->
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+
+        <collection property="students" javaType="ArrayList" ofType="Student" select="getStudentByTeacherID"
+                    column="id"/>
+    </resultMap>
+
+
+    <select id="getTeacher" resultMap="TeacherMap2">
+        select *
+        from javaweb.teacher
+        where id = #{id}
+    </select>
+
+    <!--2.再查询学生-->
+    <select id="getStudentByTeacherID" resultType="Student">
+        select *
+        from javaweb.student
+        where tid = #{tid}
+    </select>
+
+
+    <!--一对多  方式二 结束-->
+</mapper>
+
+```
+
+
+
+## 小结
+
+1.关联-association 【多对一】
+
+2.集合-collection 【一对多】
+
+3.javaType 和 ofType
+
+​	1.javaType 用来指定实体类中属性的类型
+
+​	2.ofType 用来指定映射到List或者集合中的pojo类型，泛型中的集合约束
+
+4.resultMap中的result 的property和column属性
+
+​	1.property是对应javaBean的属性
+
+​	2.column是对应xml的sql里面列名，因为sql可能使用字段别名，所以有时候需要用到映射
