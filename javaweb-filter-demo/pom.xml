@@ -25,11 +25,12 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl -->
-        <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
+<!--        要运行这个项目再开吧，应该是和哪里发生冲突了-->
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet.jsp.jstl</groupId>-->
+<!--            <artifactId>jstl</artifactId>-->
+<!--            <version>1.2</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
