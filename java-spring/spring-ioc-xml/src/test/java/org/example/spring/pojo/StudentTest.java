@@ -11,7 +11,7 @@ public class StudentTest extends TestCase {
         //获取bean 方式一 ：使用xml绑定的id获取
         //Student student = (Student) applicationContext.getBean("studentOne");
 
-        //获取bean 方式二 ：根据类型来获取
+        //获取bean 方式二 ：根据类型来获取 这种在实际开发中是使用最多的，因为没有人会重复声明同一个class
         //使用这种方式，需要保证xml里面对应的class只绑定了一次，不然的话，这里使用class获取bean，框架是不知道到你要获取的是哪个bean
         //Student student = applicationContext.getBean(Student.class);
 
@@ -34,6 +34,18 @@ public class StudentTest extends TestCase {
 
         //获取bean
         Student student = applicationContext.getBean("studentTwo", Student.class);
+
+        System.out.println(student);
+    }
+
+    /**
+     * 有参构造bean xml配置调用
+     */
+    public void testConstructArg(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
+        //获取bean
+        Student student = applicationContext.getBean("studentThree", Student.class);
 
         System.out.println(student);
     }

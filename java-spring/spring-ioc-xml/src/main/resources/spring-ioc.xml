@@ -2,12 +2,25 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="studentOne" class="org.example.spring.pojo.Student"></bean>
 
+    <!--最简单的模式-->
+    <bean id="studentOne" class="org.example.spring.pojo.Student"/>
+
+    <!--依赖注入-->
     <bean id="studentTwo" class="org.example.spring.pojo.Student">
         <property name="sid" value="12"/>
         <property name="age" value="12"/>
         <property name="sname" value="小明"/>
         <property name="gender" value="男"/>
     </bean>
+
+    <!--有参构造，直接注入-->
+    <bean id="studentThree" class="org.example.spring.pojo.Student">
+        <!--如果是按顺序写，甚至不需要声明name属性-->
+        <constructor-arg name="sid" value="12"/>
+        <constructor-arg name="sname" value="小菜"/>
+        <constructor-arg name="age" value="18"/>
+        <constructor-arg name="gender" value="女"/>
+    </bean>
+
 </beans>
