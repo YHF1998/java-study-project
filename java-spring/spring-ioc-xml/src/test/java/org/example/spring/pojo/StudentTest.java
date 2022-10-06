@@ -8,11 +8,33 @@ public class StudentTest extends TestCase {
         //获取ioc容器
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
 
+        //获取bean 方式一 ：使用xml绑定的id获取
+        //Student student = (Student) applicationContext.getBean("studentOne");
+
+        //获取bean 方式二 ：根据类型来获取
+        //使用这种方式，需要保证xml里面对应的class只绑定了一次，不然的话，这里使用class获取bean，框架是不知道到你要获取的是哪个bean
+        //Student student = applicationContext.getBean(Student.class);
+
+        //获取bean 方式三 ：使用xml绑定的id+类型来获取
+        //这种方式，能够有效避免方式二所出现的问题
+        Student student = applicationContext.getBean("studentOne", Student.class);
+
+
+        student.setSid(1);
+
+        System.out.println(student);
+    }
+
+    /**
+     * 依赖注入
+     * 通过xml配置property实现属性值的依赖注入（默认值设置）
+     */
+    public void testDI(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
         //获取bean
-        Student studentOne = (Student) applicationContext.getBean("studentOne");
+        Student student = applicationContext.getBean("studentTwo", Student.class);
 
-        studentOne.setSid(1);
-
-        System.out.println(studentOne);
+        System.out.println(student);
     }
 }
