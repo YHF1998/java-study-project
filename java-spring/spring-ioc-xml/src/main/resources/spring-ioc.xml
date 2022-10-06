@@ -23,4 +23,34 @@
         <constructor-arg name="gender" value="女"/>
     </bean>
 
+    <!--设置空值/空对象 也就是null-->
+    <bean id="studentFour" class="org.example.spring.pojo.Student">
+        <property name="sid" value="12"/>
+        <property name="age" value="12"/>
+        <property name="sname" value="小明"/>
+        <!--错误null的设置方式，这种是一个字符串-->
+        <!--<property name="gender" value="null"/>-->
+        <!--正确方式-->
+        <property name="gender" >
+            <null/>
+        </property>
+    </bean>
+
+    <bean id="studentFive" class="org.example.spring.pojo.Student">
+        <property name="sid" value="12"/>
+        <property name="age" value="12"/>
+        <!--处理带有特殊字符的内容，需要使用CDATA 进行包裹-->
+        <!--需要注意的是，使用value标签包裹的话，在标签内进行回车，也是会当成字符进行传递的-->
+        <property name="sname" >
+        <!--
+            <：&lt;
+            >：&gt;
+            CDATA节其中的内容会原样解析<![CDATA[...]]>
+            CDATA节是xml中一个特殊的标签，因此不能写在一个属性中
+        -->
+
+            <value><![CDATA[<小明>]]></value>
+        </property>
+        <property name="gender" value="男"/>
+    </bean>
 </beans>

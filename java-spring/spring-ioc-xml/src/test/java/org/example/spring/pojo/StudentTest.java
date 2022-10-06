@@ -49,4 +49,27 @@ public class StudentTest extends TestCase {
 
         System.out.println(student);
     }
+
+    /**
+     * 依赖注入，设置null
+     */
+    public void testSetNullConstruct(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
+        //获取bean
+        Student student = applicationContext.getBean("studentFour", Student.class);
+        student.setGender("中性");
+        System.out.println(student.getGender().toString());
+    }
+
+    /**
+     * 依赖注入，特殊字符处理
+     */
+    public void testCDATA(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
+        //获取bean
+        Student student = applicationContext.getBean("studentFive", Student.class);
+        System.out.println(student);
+    }
 }
