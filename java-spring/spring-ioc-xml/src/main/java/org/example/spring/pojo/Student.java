@@ -6,6 +6,9 @@ public class Student {
     private Integer age;
     private String gender;
 
+    //班级，class为关键字 用zz代替
+    private Clazz clazz;
+
     public Student(Integer sid, String sname, Integer age, String gender) {
         this.sid = sid;
         this.sname = sname;
@@ -13,6 +16,13 @@ public class Student {
         this.gender = gender;
     }
 
+    public Student(Integer sid, String sname, Integer age, String gender, Clazz clazz) {
+        this.sid = sid;
+        this.sname = sname;
+        this.age = age;
+        this.gender = gender;
+        this.clazz = clazz;
+    }
 
     public Student() {
     }
@@ -49,6 +59,14 @@ public class Student {
         this.gender = gender;
     }
 
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -56,6 +74,7 @@ public class Student {
                 ", sname='" + sname + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+                ", clazz=" + clazz +
                 '}';
     }
 }

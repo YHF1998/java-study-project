@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class StudentTest extends TestCase {
-    public void test(){
+    public void test() {
         //获取ioc容器
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
 
@@ -29,7 +29,7 @@ public class StudentTest extends TestCase {
      * 依赖注入
      * 通过xml配置property实现属性值的依赖注入（默认值设置）
      */
-    public void testDI(){
+    public void testDI() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
 
         //获取bean
@@ -41,7 +41,7 @@ public class StudentTest extends TestCase {
     /**
      * 有参构造bean xml配置调用
      */
-    public void testConstructArg(){
+    public void testConstructArg() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
 
         //获取bean
@@ -53,7 +53,7 @@ public class StudentTest extends TestCase {
     /**
      * 依赖注入，设置null
      */
-    public void testSetNullConstruct(){
+    public void testSetNullConstruct() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
 
         //获取bean
@@ -65,11 +65,20 @@ public class StudentTest extends TestCase {
     /**
      * 依赖注入，特殊字符处理
      */
-    public void testCDATA(){
+    public void testCDATA() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
 
         //获取bean
         Student student = applicationContext.getBean("studentFive", Student.class);
+        System.out.println(student);
+    }
+
+    public void testClazz() {
+        //获取ioc容器
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
+        Student student = applicationContext.getBean("studentSix", Student.class);
+
         System.out.println(student);
     }
 }

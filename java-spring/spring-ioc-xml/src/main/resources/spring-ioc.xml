@@ -31,7 +31,7 @@
         <!--错误null的设置方式，这种是一个字符串-->
         <!--<property name="gender" value="null"/>-->
         <!--正确方式-->
-        <property name="gender" >
+        <property name="gender">
             <null/>
         </property>
     </bean>
@@ -41,16 +41,32 @@
         <property name="age" value="12"/>
         <!--处理带有特殊字符的内容，需要使用CDATA 进行包裹-->
         <!--需要注意的是，使用value标签包裹的话，在标签内进行回车，也是会当成字符进行传递的-->
-        <property name="sname" >
-        <!--
-            <：&lt;
-            >：&gt;
-            CDATA节其中的内容会原样解析<![CDATA[...]]>
-            CDATA节是xml中一个特殊的标签，因此不能写在一个属性中
-        -->
+        <property name="sname">
+            <!--
+                <：&lt;
+                >：&gt;
+                CDATA节其中的内容会原样解析<![CDATA[...]]>
+                CDATA节是xml中一个特殊的标签，因此不能写在一个属性中
+            -->
 
             <value><![CDATA[<小明>]]></value>
         </property>
         <property name="gender" value="男"/>
     </bean>
+
+
+    <!--处理实体类中，类属性值是其他类的内容时：使用ref标签属性-->
+    <bean id="studentSix" class="org.example.spring.pojo.Student">
+        <property name="age" value="32"/>
+        <property name="sid" value="66"/>
+        <property name="sname" value="王五"/>
+        <property name="gender" value="男"/>
+        <!--重点就是这行，使用ref引用下面id为clazzOne的javaBean，从而实现类属性值为另一个类的依赖注入操作-->
+        <property name="clazz" ref="clazzOne"/>
+    </bean>
+    <bean id="clazzOne" class="org.example.spring.pojo.Clazz">
+        <property name="id" value="1"/>
+        <property name="name" value="一班"/>
+    </bean>
+
 </beans>
