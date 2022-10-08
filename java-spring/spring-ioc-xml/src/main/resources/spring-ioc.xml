@@ -55,7 +55,7 @@
     </bean>
 
 
-    <!--处理实体类中，类属性值是其他类的内容时：使用ref标签属性-->
+    <!--处理实体类中，类属性值是其他类的内容时：方式一：使用ref标签属性-->
     <bean id="studentSix" class="org.example.spring.pojo.Student">
         <property name="age" value="32"/>
         <property name="sid" value="66"/>
@@ -67,6 +67,33 @@
     <bean id="clazzOne" class="org.example.spring.pojo.Clazz">
         <property name="id" value="1"/>
         <property name="name" value="一班"/>
+    </bean>
+
+    <!--处理实体类中，类属性值是其他类的内容时：方式二：级联（用的频率不高 因为这种方式还要前置使用ref 也就是方式一）-->
+    <bean id="studentSeven" class="org.example.spring.pojo.Student">
+        <property name="age" value="32"/>
+        <property name="sid" value="66"/>
+        <property name="sname" value="王五"/>
+        <property name="gender" value="男"/>
+        <!--这个操作就是实例化，然后赋值-->
+        <property name="clazz" ref="clazzOne"/>
+        <property name="clazz.name" value="就这就这"/>
+        <property name="clazz.id" value="2"/>
+    </bean>
+
+    <!--处理实体类中，类属性值是其他类的内容时：方式三：内部bean-->
+    <bean id="studentEight" class="org.example.spring.pojo.Student">
+        <property name="age" value="32"/>
+        <property name="sid" value="66"/>
+        <property name="sname" value="王五"/>
+        <property name="gender" value="男"/>
+        <property name="clazz">
+            <!--内部bean是无法在ioc容器里面获取，他的作用域只有studentEight范围内-->
+            <bean id="clazzInner" class="org.example.spring.pojo.Clazz">
+                <property name="id" value="3"/>
+                <property name="name" value="哈哈哈哈哈"/>
+            </bean>
+        </property>
     </bean>
 
 </beans>

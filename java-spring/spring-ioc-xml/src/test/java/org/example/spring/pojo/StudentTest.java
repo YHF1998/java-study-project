@@ -81,4 +81,22 @@ public class StudentTest extends TestCase {
 
         System.out.println(student);
     }
+
+    public void testClazzTwo() {
+        //获取ioc容器
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
+        Student student = applicationContext.getBean("studentSeven", Student.class);
+
+        System.out.println(student);
+    }
+
+    public void testClazzThree() {
+        //获取ioc容器
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-ioc.xml");
+
+        Student student = applicationContext.getBean("studentEight", Student.class);
+
+        System.out.println(student);
+    }
 }
