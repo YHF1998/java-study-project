@@ -1,6 +1,7 @@
 package org.example.spring.pojo;
 
 import junit.framework.TestCase;
+import org.example.spring.utils.ApplicationContextUtil;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class StudentTest extends TestCase {
@@ -98,5 +99,21 @@ public class StudentTest extends TestCase {
         Student student = applicationContext.getBean("studentEight", Student.class);
 
         System.out.println(student);
+    }
+
+    /**
+     * 数组类型值的依赖注入
+     */
+    public void testStudentHobby() {
+        Student student = ApplicationContextUtil.applicationContext.getBean("studentNine", Student.class);
+
+        System.out.println(student);
+    }
+
+    public void testClazzStudentList() {
+        Clazz clazz = ApplicationContextUtil.applicationContext.getBean("clazzTwo", Clazz.class);
+
+        System.out.println(clazz);
+
     }
 }
