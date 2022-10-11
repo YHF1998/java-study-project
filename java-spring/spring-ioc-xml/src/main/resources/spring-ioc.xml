@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--最简单的模式-->
     <bean id="studentOne" class="org.example.spring.pojo.Student"/>
@@ -119,7 +119,7 @@
         </property>
     </bean>
 
-    <!--属性类型为list的依赖注入-->
+    <!--属性类型为list的依赖注入 方式一-->
     <bean id="clazzTwo" class="org.example.spring.pojo.Clazz">
         <property name="name" value="一班"/>
         <property name="id" value="1"/>
@@ -133,4 +133,20 @@
             </list>
         </property>
     </bean>
+
+    <!--属性类型为list的依赖注入 方式二：配置一个集合类型的bean 使用util约束-->
+    <util:list id="studentListOne">
+        <ref bean="studentOne"/>
+        <ref bean="studentTwo"/>
+        <ref bean="studentThree"/>
+        <ref bean="studentFour"/>
+    </util:list>
+    <bean id="clazzThree" class="org.example.spring.pojo.Clazz">
+        <property name="name" value="一班"/>
+        <property name="id" value="1"/>
+        <!--重点是这里，使用util:list标签-->
+        <property name="studentList" ref="studentListOne"/>
+    </bean>
+
+
 </beans>

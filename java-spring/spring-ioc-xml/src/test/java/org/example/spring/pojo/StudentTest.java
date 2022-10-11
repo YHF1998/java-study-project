@@ -116,4 +116,10 @@ public class StudentTest extends TestCase {
         System.out.println(clazz);
 
     }
+
+    public void testClazzStudentListTwo() {
+        Clazz clazzThree = ApplicationContextUtil.applicationContext.getBean("clazzThree", Clazz.class);
+
+        System.out.println(clazzThree);
+    }
 }
