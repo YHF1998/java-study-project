@@ -1,10 +1,14 @@
 package org.example.spring.pojo;
 
+import java.util.Arrays;
+
 public class Student {
     private Integer sid;
     private String sname;
     private Integer age;
     private String gender;
+
+    private String[] hobby;
 
     //班级，class为关键字 用zz代替
     private Clazz clazz;
@@ -67,6 +71,14 @@ public class Student {
         this.clazz = clazz;
     }
 
+    public String[] getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String[] hobby) {
+        this.hobby = hobby;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -74,6 +86,7 @@ public class Student {
                 ", sname='" + sname + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+                ", hobby=" + Arrays.toString(hobby) +
                 ", clazz=" + clazz +
                 '}';
     }

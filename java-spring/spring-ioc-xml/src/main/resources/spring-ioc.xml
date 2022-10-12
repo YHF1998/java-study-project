@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--最简单的模式-->
     <bean id="studentOne" class="org.example.spring.pojo.Student"/>
@@ -95,5 +95,58 @@
             </bean>
         </property>
     </bean>
+
+    <!--属性类型为数组的依赖注入-->
+    <bean id="studentNine" class="org.example.spring.pojo.Student">
+        <property name="age" value="32"/>
+        <property name="sid" value="66"/>
+        <property name="sname" value="王五"/>
+        <property name="gender" value="男"/>
+        <property name="clazz">
+            <!--内部bean是无法在ioc容器里面获取，他的作用域只有studentEight范围内-->
+            <bean id="clazzInner" class="org.example.spring.pojo.Clazz">
+                <property name="id" value="3"/>
+                <property name="name" value="哈哈哈哈哈"/>
+            </bean>
+        </property>
+        <!--数组-->
+        <property name="hobby">
+            <array>
+                <value>游泳</value>
+                <value>滑雪</value>
+                <value>溜冰</value>
+            </array>
+        </property>
+    </bean>
+
+    <!--属性类型为list的依赖注入 方式一-->
+    <bean id="clazzTwo" class="org.example.spring.pojo.Clazz">
+        <property name="name" value="一班"/>
+        <property name="id" value="1"/>
+        <!--重点是这里，使用list标签-->
+        <property name="studentList">
+            <list>
+                <ref bean="studentOne"/>
+                <ref bean="studentTwo"/>
+                <ref bean="studentThree"/>
+                <ref bean="studentFour"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--属性类型为list的依赖注入 方式二：配置一个集合类型的bean 使用util约束-->
+    <util:list id="studentListOne">
+        <ref bean="studentOne"/>
+        <ref bean="studentTwo"/>
+        <ref bean="studentThree"/>
+        <ref bean="studentFour"/>
+    </util:list>
+    <bean id="clazzThree" class="org.example.spring.pojo.Clazz">
+        <property name="name" value="一班"/>
+        <property name="id" value="1"/>
+        <!--重点是这里，使用util:list标签-->
+        <property name="studentList" ref="studentListOne"/>
+    </bean>
+
 
 </beans>
