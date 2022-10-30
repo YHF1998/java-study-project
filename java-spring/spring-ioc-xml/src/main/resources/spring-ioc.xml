@@ -117,6 +117,16 @@
                 <value>溜冰</value>
             </array>
         </property>
+        <!--该学生，有哪些老师教 :方式一-->
+        <!--<property name="teacherMap">-->
+        <!--    <map>-->
+        <!--        <entry key="10086" value-ref="teacherOne"/>-->
+        <!--        <entry key="10087" value-ref="teacherTwo"/>-->
+        <!--    </map>-->
+        <!--</property>-->
+
+        <!--该学生，有哪些老师教 :方式二 引用  util:map ref-->
+        <property name="teacherMap" ref="teacherMap1"/>
     </bean>
 
     <!--属性类型为list的依赖注入 方式一-->
@@ -147,6 +157,24 @@
         <!--重点是这里，使用util:list标签-->
         <property name="studentList" ref="studentListOne"/>
     </bean>
+
+
+    <bean id="teacherOne" class="org.example.spring.pojo.Teacher">
+        <property name="id" value="1"/>
+        <property name="tname" value="cc老师"/>
+    </bean>
+
+
+    <bean id="teacherTwo" class="org.example.spring.pojo.Teacher">
+        <property name="id" value="2"/>
+        <property name="tname" value="koko老师"/>
+    </bean>
+
+    <!--类型属性为map的依赖注入-->
+    <util:map id="teacherMap1">
+        <entry key="10086" value-ref="teacherOne"/>
+        <entry key="10087" value-ref="teacherTwo"/>
+    </util:map>
 
 
 </beans>

@@ -1,6 +1,7 @@
 package org.example.spring.pojo;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class Student {
     private Integer sid;
@@ -12,6 +13,10 @@ public class Student {
 
     //班级，class为关键字 用zz代替
     private Clazz clazz;
+
+    //老师们
+    private Map<String, Teacher> teacherMap;
+
 
     public Student(Integer sid, String sname, Integer age, String gender) {
         this.sid = sid;
@@ -79,6 +84,14 @@ public class Student {
         this.hobby = hobby;
     }
 
+    public Map<String, Teacher> getTeacherMap() {
+        return teacherMap;
+    }
+
+    public void setTeacherMap(Map<String, Teacher> teacherMap) {
+        this.teacherMap = teacherMap;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -88,6 +101,7 @@ public class Student {
                 ", gender='" + gender + '\'' +
                 ", hobby=" + Arrays.toString(hobby) +
                 ", clazz=" + clazz +
+                ", teacherMap=" + teacherMap +
                 '}';
     }
 }
