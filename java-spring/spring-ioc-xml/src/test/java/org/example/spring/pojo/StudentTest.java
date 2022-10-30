@@ -122,4 +122,14 @@ public class StudentTest extends TestCase {
 
         System.out.println(clazzThree);
     }
+
+    /**
+     * 使用p命名空间方式的依赖注入demo
+     */
+    public void testStudent11() {
+        Student student11 = ApplicationContextUtil.applicationContext.getBean("student11", Student.class);
+
+        System.out.println(student11);
+
+    }
 }
