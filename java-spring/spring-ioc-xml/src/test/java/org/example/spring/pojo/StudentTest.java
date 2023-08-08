@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 import org.example.spring.utils.ApplicationContextUtil;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.math.BigDecimal;
+
 public class StudentTest extends TestCase {
     public void test() {
         //获取ioc容器
@@ -131,5 +133,28 @@ public class StudentTest extends TestCase {
 
         System.out.println(student11);
 
+    }
+    
+    
+    public void testDuibi(){
+        float f1 = 3.14f;
+        double d1 = f1;
+
+        BigDecimal math1 = new BigDecimal(f1);
+        BigDecimal math2 = math1;
+        math1 = math1.add(math2);
+        
+        System.out.println(d1 == f1);
+        System.out.println(d1);
+        System.out.println(f1);
+        System.out.println(math1);
+        System.out.println(math2);
+        
+        
+        int i1 = 1;
+        i1++;
+        
+        System.out.println(i1);
+        
     }
 }
