@@ -47,5 +47,12 @@ class BlogMapperTest {
         byte b  = (byte)a; //强制转换，在超过了byte范围时，会转换为0
         System.out.println(a);
         System.out.println(b);
+        
+        Short s = 5;
+        System.out.println(s);
+        System.out.println(s.getClass());
+        System.out.println(s.getClass() == java.lang.Short.class);
+        System.out.println(s.getClass() == Short.class);
+        
     }
 }
