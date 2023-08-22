@@ -39,4 +39,13 @@ class BlogMapperTest {
 
         sqlSession.close();
     }
+    
+    @Test
+    void testEcho() {
+        byte b2 = 65; // 系统会自动把 65 当成 byte 类型处理
+        int a = 12;
+        byte b  = (byte)a; //强制转换，在超过了byte范围时，会转换为0
+        System.out.println(a);
+        System.out.println(b);
+    }
 }
